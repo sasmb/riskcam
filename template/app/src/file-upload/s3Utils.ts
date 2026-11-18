@@ -59,6 +59,29 @@ export const getDownloadFileSignedURLFromS3 = async ({
   return await getSignedUrl(s3Client, command, { expiresIn: 3600 });
 };
 
+export const getTemporaryDownloadFileSignedURLFromS3 = async (
+  s3Key: string,
+  expiresIn = 300,
+) => {
+  const command = new GetObjectCommand({
+    Bucket: env.AWS_S3_FILES_BUCKET,
+    Key: s3Key,
+  });
+  return getSignedUrl(s3Client, command, { expiresIn });
+};
+
+export const getS3ObjectMetadataFromS3 = async (s3Key: string) => {
+  const command = new HeadObjectCommand({
+    Bucket: env.AWS_S3_FILES_BUCKET,
+    Key: s3Key,
+  });
+  const response = await s3Client.send(command);
+  return {
+    contentType: response.ContentType ?? "",
+    contentLength: response.ContentLength ?? 0,
+  };
+};
+
 export const deleteFileFromS3 = async ({ s3Key }: { s3Key: string }) => {
   const command = new DeleteObjectCommand({
     Bucket: env.AWS_S3_FILES_BUCKET,

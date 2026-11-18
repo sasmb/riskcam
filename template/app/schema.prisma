@@ -27,6 +27,7 @@ model User {
   contactFormMessages       ContactFormMessage[]
   tasks                     Task[]
   files                     File[]
+  productScans              ProductScan[]
 }
 
 model ProcessedWebhookEvent {
@@ -70,6 +71,52 @@ model File {
   name                      String
   type                      String
   s3Key                     String
+}
+
+model ProductScan {
+  id                        String             @id @default(uuid())
+  createdAt                 DateTime           @default(now())
+  updatedAt                 DateTime           @updatedAt
+  completedAt               DateTime?
+
+  user                      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                    String
+  genuineProductRef          GenuineProductRef? @relation(fields: [genuineProductRefId], references: [id], onDelete: SetNull)
+  genuineProductRefId        String?
+
+  imageS3Key                 String
+  status                     String             @default("PENDING") // PENDING, PROCESSING, COMPLETE, FAILED
+  barcode                    String?
+  extractedFields            Json?
+  registryEvidence           Json?
+  verdict                    String?
+  confidence                 Float?
+  jevRiskScore               Float?
+  flags                      Json?
+  decisionReason             String?
+  errorMessage               String?
+
+  @@index([userId, createdAt])
+  @@index([genuineProductRefId])
+}
+
+// Curated catalog records are provisioned by the product operator, not asserted by scanners.
+model GenuineProductRef {
+  id                        String        @id @default(uuid())
+  createdAt                 DateTime      @default(now())
+  updatedAt                 DateTime      @updatedAt
+
+  productName               String
+  manufacturer              String
+  nafdacRegistrationNumber  String?
+  barcode                   String?
+  imageS3Key                String
+  notes                     String?
+  isActive                  Boolean       @default(true)
+
+  scans                     ProductScan[]
+
+  @@index([isActive, productName])
 }
 
 model DailyStats {

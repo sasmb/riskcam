@@ -16,13 +16,14 @@ import { head } from "./src/client/head.wasp";
 import { demoAiAppSpec } from "./src/demo-ai-app/demo-ai-app.wasp";
 import { fileUploadSpec } from "./src/file-upload/file-upload.wasp";
 import { paymentSpec } from "./src/payment/payment.wasp";
+import { productScansSpec } from "./src/product-scans/product-scans.wasp";
 import { emailSender } from "./src/server/emailSender.wasp";
 import { userSpec } from "./src/user/user.wasp";
 
 export default app({
-  name: "OpenSaaS",
-  wasp: { version: "^0.27.0" },
-  title: "My Open SaaS App",
+  name: "RiskCam",
+  wasp: { version: "^0.26.0" },
+  title: "RiskCam — Product screening",
   head,
   auth: authConfig,
   db: {
@@ -50,6 +51,7 @@ export default app({
     demoAiAppSpec,
     paymentSpec,
     fileUploadSpec,
+    productScansSpec,
     analyticsSpec,
     adminSpec,
   ],
