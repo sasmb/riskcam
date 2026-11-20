@@ -5,6 +5,7 @@ import { googleAnalyticsEnvSchema, plausibleEnvSchema } from "./analytics/env";
 import { authEnvSchema } from "./auth/env";
 import { demoAiAppEnvSchema } from "./demo-ai-app/env";
 import { fileUploadEnvSchema } from "./file-upload/env";
+import { productScanEnvSchema } from "./product-scans/env";
 import { lemonSqueezyEnvSchema } from "./payment/lemonSqueezy/env";
 import { paddleClientEnvSchema, paddleEnvSchema } from "./payment/paddle/env";
 import { polarEnvSchema } from "./payment/polar/env";
@@ -26,6 +27,7 @@ export const serverEnvValidationSchema = defineEnvValidationSchema(
     ...paddleEnvSchema.shape,
     ...demoAiAppEnvSchema.shape,
     ...fileUploadEnvSchema.shape,
+    ...productScanEnvSchema.shape,
     ...plausibleEnvSchema.shape,
     ...googleAnalyticsEnvSchema.shape,
   }),

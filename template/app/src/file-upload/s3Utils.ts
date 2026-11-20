@@ -14,6 +14,7 @@ import { MAX_FILE_SIZE_BYTES } from "./validation";
 
 export const s3Client = new S3Client({
   region: env.AWS_S3_REGION,
+  ...(process.env.R2_ENDPOINT ? { endpoint: process.env.R2_ENDPOINT } : {}),
   credentials: {
     accessKeyId: env.AWS_S3_IAM_ACCESS_KEY,
     secretAccessKey: env.AWS_S3_IAM_SECRET_KEY,
@@ -57,6 +58,29 @@ export const getDownloadFileSignedURLFromS3 = async ({
     Key: s3Key,
   });
   return await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+};
+
+export const getTemporaryDownloadFileSignedURLFromS3 = async (
+  s3Key: string,
+  expiresIn = 300,
+) => {
+  const command = new GetObjectCommand({
+    Bucket: env.AWS_S3_FILES_BUCKET,
+    Key: s3Key,
+  });
+  return getSignedUrl(s3Client, command, { expiresIn });
+};
+
+export const getS3ObjectMetadataFromS3 = async (s3Key: string) => {
+  const command = new HeadObjectCommand({
+    Bucket: env.AWS_S3_FILES_BUCKET,
+    Key: s3Key,
+  });
+  const response = await s3Client.send(command);
+  return {
+    contentType: response.ContentType ?? "",
+    contentLength: response.ContentLength ?? 0,
+  };
 };
 
 export const deleteFileFromS3 = async ({ s3Key }: { s3Key: string }) => {
