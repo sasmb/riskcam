@@ -7,8 +7,7 @@ import { type PaymentPlan, PaymentPlanId } from "./plans";
  * E.g. price id on Stripe, or variant id on LemonSqueezy.
  */
 export const paymentProcessorPlanIds = {
-  [PaymentPlanId.Hobby]: env.PAYMENTS_HOBBY_SUBSCRIPTION_PLAN_ID,
-  [PaymentPlanId.Pro]: env.PAYMENTS_PRO_SUBSCRIPTION_PLAN_ID,
+  [PaymentPlanId.Subscription]: env.PAYMENTS_SUBSCRIPTION_PLAN_ID,
   [PaymentPlanId.Credits10]: env.PAYMENTS_CREDITS_10_PLAN_ID,
 } as const satisfies Record<PaymentPlanId, string>;
 

@@ -1,4 +1,9 @@
-import { app, page, route } from "@wasp/spec";
+/// <reference lib="dom" />
+/// <reference lib="dom.iterable" />
+/// <reference path="./src/vite-env.d.ts" />
+/// <reference path="./.wasp/out/types/app/sdk/register.ts" />
+
+import { app, page, route } from "@wasp.sh/spec";
 
 import { App } from "./src/client/App" with { type: "ref" };
 import { NotFoundPage } from "./src/client/components/NotFoundPage" with { type: "ref" };
@@ -21,7 +26,7 @@ import { userSpec } from "./src/user/user.wasp";
 
 export default app({
   name: "OpenSaaS",
-  wasp: { version: "^0.27.0" },
+  wasp: { version: "^0.26.0" },
   title: "My Open SaaS App",
   head,
   auth: authConfig,

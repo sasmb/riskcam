@@ -23,8 +23,7 @@ export function hasActiveSubscription({
 }
 
 export enum PaymentPlanId {
-  Hobby = "hobby",
-  Pro = "pro",
+  Subscription = "subscription",
   Credits10 = "credits10",
 }
 
@@ -38,12 +37,8 @@ export type PaymentPlanEffect =
   | { kind: "credits"; amount: number };
 
 export const paymentPlans = {
-  [PaymentPlanId.Hobby]: {
-    id: PaymentPlanId.Hobby,
-    effect: { kind: "subscription" },
-  },
-  [PaymentPlanId.Pro]: {
-    id: PaymentPlanId.Pro,
+  [PaymentPlanId.Subscription]: {
+    id: PaymentPlanId.Subscription,
     effect: { kind: "subscription" },
   },
   [PaymentPlanId.Credits10]: {
@@ -66,8 +61,7 @@ export function getPaymentPlanCreditsAmount(planId: PaymentPlanId): number {
 
 export function prettyPaymentPlanName(planId: PaymentPlanId): string {
   const planToName: Record<PaymentPlanId, string> = {
-    [PaymentPlanId.Hobby]: "Hobby",
-    [PaymentPlanId.Pro]: "Pro",
+    [PaymentPlanId.Subscription]: "Pro",
     [PaymentPlanId.Credits10]: "10 Credits",
   };
   return planToName[planId];

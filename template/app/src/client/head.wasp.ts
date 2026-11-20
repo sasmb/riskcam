@@ -1,4 +1,4 @@
-import { type App } from "@wasp/spec";
+import { type App } from "@wasp.sh/spec";
 
 export const head: App["head"] = [
   "<link rel='icon' href='/favicon.ico' />",

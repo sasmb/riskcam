@@ -25,7 +25,7 @@ import {
   SubscriptionStatus,
 } from "./plans";
 
-const bestDealPaymentPlanId: PaymentPlanId = PaymentPlanId.Pro;
+const bestDealPaymentPlanId: PaymentPlanId = PaymentPlanId.Subscription;
 
 interface PaymentPlanCard {
   name: string;
@@ -35,16 +35,10 @@ interface PaymentPlanCard {
 }
 
 export const paymentPlanCards: Record<PaymentPlanId, PaymentPlanCard> = {
-  [PaymentPlanId.Hobby]: {
-    name: prettyPaymentPlanName(PaymentPlanId.Hobby),
-    price: "$9.99",
-    description: "All you need to get started",
-    features: ["Limited monthly usage", "Basic support"],
-  },
-  [PaymentPlanId.Pro]: {
-    name: prettyPaymentPlanName(PaymentPlanId.Pro),
-    price: "$19.99",
-    description: "Our most popular plan",
+  [PaymentPlanId.Subscription]: {
+    name: prettyPaymentPlanName(PaymentPlanId.Subscription),
+    price: "$5.99",
+    description: "Our monthly subscription plan",
     features: ["Unlimited monthly usage", "Priority customer support"],
   },
   [PaymentPlanId.Credits10]: {
@@ -146,7 +140,7 @@ export function PricingPage() {
             <AlertDescription>{errorMessage}</AlertDescription>
           </Alert>
         )}
-        <div className="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-x-8">
+        <div className="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-auto lg:max-w-4xl lg:grid-cols-2 lg:gap-x-8">
           {Object.values(PaymentPlanId).map((planId) => (
             <Card
               key={planId}
